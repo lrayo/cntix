@@ -1,0 +1,13 @@
+import { connectDB, sql } from '@/lib/db';
+
+export async function GET() {
+  try {
+    const pool = await connectDB();
+    const result = await pool.request().query('SELECT * FROM tipo_documentos');
+
+    return Response.json(result.recordset);
+  } catch (err) {
+    console.error("❌ Error en la API:", err);
+    return Response.json({ error: 'Error en la base de datos', details: err.message }, { status: 500 });
+  }
+}
